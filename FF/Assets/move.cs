@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class move : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public bool jump = true;
+    public float speed = 1;
     void Start()
     {
         Cursor.visible = false;
@@ -13,9 +14,21 @@ public class move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetAxis("Jump") == 1){
-    GetComponent<Rigidbody>().AddForce(new Vector3(0 , 10, 0));
+        if(Input.GetAxis("Jump") == 1 && jump == true){
+   // GetComponent<Rigidbody>().AddForce(new Vector3(0 , 200, 0));
+    jump = false; 
         }
-        transform.position += (Camera.main.transform.forward * 5 * Time.deltaTime) * Input.GetAxis("Vertical");
+                if(Input.GetKey(KeyCode.LeftShift)){
+speed = 2f;
+        }else{
+speed = 1;
+        }
+        transform.position += ((Camera.main.transform.forward * 5 * Time.deltaTime) * Input.GetAxis("Vertical")) * speed;
+    }
+    void OnCollisionEnter(Collision other){
+        Debug.Log(other);
+        if(other.gameObject.tag == "floor"){
+jump = true;
+        }
     }
 }
