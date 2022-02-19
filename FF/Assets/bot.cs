@@ -21,7 +21,7 @@ public class bot : MonoBehaviour
         transform.rotation = rotation;
         transform.position += (transform.forward * 2 * Time.deltaTime);
         if(Physics.Raycast(lookWall, out hit, 3)){
-            Debug.Log(hit);
+            Debug.Log(hit.collider.name);
         }
     }
 }
