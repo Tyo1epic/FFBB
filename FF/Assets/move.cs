@@ -26,7 +26,6 @@ speed = 1;
         transform.position += ((Camera.main.transform.forward * 5 * Time.deltaTime) * Input.GetAxis("Vertical")) * speed;
     }
     void OnCollisionEnter(Collision other){
-        Debug.Log(other);
         if(other.gameObject.tag == "floor"){
 jump = true;
         }
