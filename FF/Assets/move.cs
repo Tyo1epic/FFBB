@@ -19,11 +19,12 @@ public class move : MonoBehaviour
     jump = false; 
         }
                 if(Input.GetKey(KeyCode.LeftShift)){
-speed = 2f;
+speed = 3f;
         }else{
 speed = 1;
         }
         transform.position += ((Camera.main.transform.forward * 5 * Time.deltaTime) * Input.GetAxis("Vertical")) * speed;
+        transform.position += ((Camera.main.transform.right * 5 * Time.deltaTime) * Input.GetAxis("Horizontal")) * speed;
     }
     void OnCollisionEnter(Collision other){
         if(other.gameObject.tag == "floor"){
@@ -32,7 +33,7 @@ jump = true;
     }
         void OnTriggerEnter(Collider other){
         if(other.name == "live_fr"){
-GameObject.Find("froggy").transform.GetChild(0).gameObject.SetActive(true);
+GameObject.Find("froggy").transform.GetChild(0).GetComponent<bot>().startUp = true;
         }
     }
 }

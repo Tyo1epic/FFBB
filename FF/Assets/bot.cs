@@ -12,6 +12,8 @@ public class bot : MonoBehaviour
     public int agg_speed = 1;
     public float rote = 0;
     public Transform touching;
+    public bool chase_started = false;
+    public bool startUp = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,7 @@ public class bot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(startUp == true){
         RaycastHit hit;
         Ray lookWall = new Ray(transform.position, transform.forward);
          Vector3 direction = player.position - transform.position;
@@ -78,10 +81,16 @@ break;
         }
         }
         if(heehee == true){
+            if(chase_started == true){
+
+            }else{
+                chase_started = true;
+                GameObject.Find("chase").GetComponent<AudioSource>().Play(0);
+            }
             speed = agg_speed;
         }else{
 speed = norm_speed;
-        }
+        }}
     }
     void OnCollisionEnter(Collision other){
     rote = other.gameObject.transform.rotation.x;
