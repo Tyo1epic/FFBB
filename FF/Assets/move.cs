@@ -30,4 +30,9 @@ speed = 1;
 jump = true;
         }
     }
+        void OnTriggerEnter(Collider other){
+        if(other.name == "live_fr"){
+GameObject.Find("froggy").transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
 }

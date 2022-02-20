@@ -10,6 +10,7 @@ public class bot : MonoBehaviour
     public int speed = 1;
     public int norm_speed = 1;
     public int agg_speed = 1;
+    public float rote = 0;
     public Transform touching;
     // Start is called before the first frame update
     void Start()
@@ -29,10 +30,12 @@ public class bot : MonoBehaviour
         if(hey == true){
         directions = lastplayer.position - transform.GetChild(0).position;
         rotations = Quaternion.LookRotation(directions);
-        transform.rotation = rotation;
+        transform.rotation = Quaternion.Euler(new Vector3(rote, 0, 0));
+        transform.rotation = Quaternion.Euler(rotation.eulerAngles + transform.rotation.eulerAngles);
         transform.GetChild(0).rotation = rotations;
-        }else{
-        transform.rotation = rotation;
+        }else{        
+        transform.rotation = Quaternion.Euler(new Vector3(rote, 0, 0));
+        transform.rotation = Quaternion.Euler(rotation.eulerAngles + transform.rotation.eulerAngles);
         transform.GetChild(0).rotation = rotations;
         }
 
@@ -81,6 +84,7 @@ speed = norm_speed;
         }
     }
     void OnCollisionEnter(Collision other){
+    rote = other.gameObject.transform.rotation.x;
 touching = other.gameObject.transform;
     }
 }
