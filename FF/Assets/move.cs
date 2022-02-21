@@ -19,12 +19,14 @@ public class move : MonoBehaviour
     jump = false; 
         }
                 if(Input.GetKey(KeyCode.LeftShift)){
+                    Camera.main.fieldOfView = 80;
 speed = 3f;
         }else{
+                    Camera.main.fieldOfView = 60;
 speed = 1;
         }
-        transform.position += ((Camera.main.transform.forward * 5 * Time.deltaTime) * Input.GetAxis("Vertical")) * speed;
-        transform.position += ((Camera.main.transform.right * 5 * Time.deltaTime) * Input.GetAxis("Horizontal")) * speed;
+        Vector3 direc = (((Camera.main.transform.forward * 5 * Time.deltaTime) * Input.GetAxis("Vertical")) * 100 * speed) + (((Camera.main.transform.right * 5 * Time.deltaTime) * Input.GetAxis("Horizontal")) * 100 * speed);
+    GetComponent<Rigidbody>().velocity = new Vector3(direc.x,  GetComponent<Rigidbody>().velocity.y, direc.z);
     }
     void OnCollisionEnter(Collision other){
         if(other.gameObject.tag == "floor"){
@@ -33,7 +35,14 @@ jump = true;
     }
         void OnTriggerEnter(Collider other){
         if(other.name == "live_fr"){
-GameObject.Find("froggy").transform.GetChild(0).GetComponent<bot>().startUp = true;
+             GameObject.Find("run").GetComponent<Animator>().SetTrigger("start_running");      
+            for (int i = 0; i <  GameObject.Find("froggy").transform.childCount; i++)
+            {
+          GameObject.Find("froggy").transform.GetChild(i).GetComponent<bot>().startUp = true;  
+          GameObject.Find("froggy").transform.GetChild(i).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;   
+          GameObject.Find("froggy").transform.GetChild(i).GetComponent<Animator>().enabled = false;      
+            }
+
         }
     }
 }

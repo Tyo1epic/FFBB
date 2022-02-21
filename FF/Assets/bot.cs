@@ -14,6 +14,7 @@ public class bot : MonoBehaviour
     public Transform touching;
     public bool chase_started = false;
     public bool startUp = false;
+    public bool stilldown = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +42,11 @@ public class bot : MonoBehaviour
         transform.rotation = Quaternion.Euler(rotation.eulerAngles + transform.rotation.eulerAngles);
         transform.GetChild(0).rotation = rotations;
         }
-
-        transform.position += (transform.forward * 2 * Time.deltaTime) * speed;
+Vector3 posi = (transform.forward * 2 * Time.deltaTime) * 110 * speed;
+        GetComponent<Rigidbody>().velocity = new Vector3(posi.x, GetComponent<Rigidbody>().velocity.y ,posi.z);
+         if(Mathf.Floor(player.position.y - transform.position.y) <= 0.5f){
+             stilldown = false;
+         }
         if(Mathf.Floor(player.position.y - transform.position.y) >= 2){
             GameObject[] res = GameObject.FindGameObjectsWithTag("stairs");
             bool heyd = false;
@@ -52,9 +56,12 @@ public class bot : MonoBehaviour
 heyd = true;
                 }
             }
-            if(!heyd){
-            player = res[Random.Range(0, res.Length)].transform.GetChild(0);
-            hey = true;}
+            if(!heyd && !stilldown){
+                int ia = Random.Range(0, res.Length);
+                transform.position = res[ia].transform.GetChild(1).position;
+            player = res[ia].transform.GetChild(0);
+            hey = true;
+            stilldown = true;}
         }
         if(direction.x < 0.3f && direction.y < 0.3f && direction.z < 0.3f && hey == true){
 player = lastplayer;
