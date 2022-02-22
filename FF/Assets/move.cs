@@ -6,6 +6,7 @@ public class move : MonoBehaviour
 {
     public bool jump = true;
     public float speed = 1;
+    public GameObject inter;
     void Start()
     {
         Cursor.visible = false;
@@ -14,8 +15,9 @@ public class move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetAxis("Jump") == 1 && jump == true){
+        if(Input.GetAxis("Jump") == 1 && inter != null){
    // GetComponent<Rigidbody>().AddForce(new Vector3(0 , 200, 0));
+   inter.GetComponent<Animator>().Play("dooropen", 0, 0);
     jump = false; 
         }
                 if(Input.GetKey(KeyCode.LeftShift)){
@@ -43,6 +45,15 @@ jump = true;
           GameObject.Find("froggy").transform.GetChild(i).GetComponent<Animator>().enabled = false;      
             }
 
+        }else if(other.tag == "interarct"){
+
+inter = other.gameObject;
+        }
+    }
+            void OnTriggerExit(Collider other){
+if(other.tag == "interarct"){
+
+inter = null;
         }
     }
 }
