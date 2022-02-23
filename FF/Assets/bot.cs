@@ -92,7 +92,6 @@ break;
 
             }else{
                 chase_started = true;
-                GameObject.Find("chase").GetComponent<AudioSource>().Play(0);
             }
             speed = agg_speed;
         }else{
