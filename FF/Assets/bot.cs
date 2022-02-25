@@ -42,7 +42,7 @@ public class bot : MonoBehaviour
         transform.rotation = Quaternion.Euler(rotation.eulerAngles + transform.rotation.eulerAngles);
         transform.GetChild(0).rotation = rotations;
         }
-Vector3 posi = (transform.forward * 2 * Time.deltaTime) * 110 * speed;
+Vector3 posi = (transform.forward * 2.5f) * speed;
         GetComponent<Rigidbody>().velocity = new Vector3(posi.x, GetComponent<Rigidbody>().velocity.y ,posi.z);
          if(Mathf.Floor(player.position.y - transform.position.y) <= 0.5f){
              stilldown = false;
