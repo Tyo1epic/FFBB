@@ -8,6 +8,7 @@ TagManager:
   - wwall
   - stairs
   - interarct
+  - go
   layers:
   - Default
   - TransparentFX
