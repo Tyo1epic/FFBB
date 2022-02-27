@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class move : MonoBehaviour
+public class move : MonoBehaviour 
 {
     public bool jump = true;
     public float speed = 1;
@@ -30,7 +31,7 @@ public class move : MonoBehaviour
             StopCoroutine(reload());
             if (speed == 2)
             {
-                Camera.main.GetComponent<Animator>().Play("out", 0, 0);
+                Camera.main.GetComponent<Animator>().Play("out", 0, 0); 
             }
             moveS.value -= moveS.maxValue * 0.001f;
             if (moveS.value < moveS.maxValue / 2)
@@ -65,8 +66,9 @@ public class move : MonoBehaviour
     {
         if (other.name == "live_fr")
         {
+            if(GameObject.Find("chase")){
             GameObject.Find("run").GetComponent<Animator>().SetTrigger("start_running");
-            GameObject.Find("chase").GetComponent<AudioSource>().Play(0);
+            GameObject.Find("chase").GetComponent<AudioSource>().Play(0);}
             for (int i = 0; i < GameObject.Find("froggy").transform.childCount; i++)
             {
                 GameObject.Find("froggy").transform.GetChild(i).GetComponent<bot>().startUp = true;
@@ -79,6 +81,10 @@ public class move : MonoBehaviour
         {
 
             inter = other.gameObject.transform.GetChild(0).GetComponent<Animator>();
+        }else if (other.tag == "go")
+        {
+
+           SceneManager.LoadScene(other.name);
         }
     }
     void OnTriggerExit(Collider other)

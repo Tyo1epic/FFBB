@@ -7,25 +7,45 @@ public class bot : MonoBehaviour
     public Transform player;
     public Transform lastplayer;
     public bool hey;
-    public int speed = 1;
+    public int speed = 1;  
     public int norm_speed = 1;
     public int agg_speed = 1;
+    public bool look;
     public float rote = 0;
     public Transform touching;
     public bool chase_started = false;
     public bool startUp = false;
     public bool stilldown = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if(startUp == true){
-        RaycastHit hit;
+        if(startUp == true ){
+            GetComponent<Animator>().enabled = false;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
+                    bool heehee = true;
+        for (int i = 1; i < 500; i++)
+        {
+                  RaycastHit hits;
+        Ray lookWalls = new Ray(transform.position, transform.forward);
+                    if(Physics.Raycast(lookWalls, out hits, i/100)){
+            if(hits.collider.tag == "wwall"){
+heehee = false;
+break;
+            }
+        }
+        }
+            if((!GetComponent<Renderer>().isVisible || !heehee) && look == true){
+                move();
+            }
+            if(!look){
+                move();
+            }
+
+}
+    }
+    void move(){
+                RaycastHit hit;
         Ray lookWall = new Ray(transform.position, transform.forward);
          Vector3 direction = player.position - transform.position;
  Quaternion rotation = Quaternion.LookRotation(direction);
@@ -96,7 +116,7 @@ break;
             speed = agg_speed;
         }else{
 speed = norm_speed;
-        }}
+        }
     }
     void OnCollisionEnter(Collision other){
     rote = other.gameObject.transform.rotation.x;
