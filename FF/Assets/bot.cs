@@ -24,18 +24,18 @@ public class bot : MonoBehaviour
             GetComponent<Animator>().enabled = false;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
                     bool heehee = true;
-        for (int i = 1; i < 500; i++)
-        {
+       
                   RaycastHit hits;
         Ray lookWalls = new Ray(transform.position, transform.forward);
-                    if(Physics.Raycast(lookWalls, out hits, i/100)){
+                    if(Physics.Raycast(lookWalls, out hits, Vector3.Distance(transform.position, player.transform.position))){
             if(hits.collider.tag == "wwall"){
 heehee = false;
-break;
-            }
+                        Debug.Log("I hadn't saw you");
+
+            
         }
         }
-            if((!GetComponent<Renderer>().isVisible || !heehee) && look == true){
+            if((!GetComponent<Renderer>().isVisible || !heehee) && look){
                 move();
             }
             if(!look){
