@@ -84,6 +84,10 @@ public class move : MonoBehaviour
         {
 
            SceneManager.LoadSceneAsync(other.name);
+        }else if (other.tag == "talk")
+        {
+            GameObject.Find("so (" + other.gameObject.name + ")").GetComponent<AudioSource>().Play(0);
+            other.gameObject.SetActive(false);
         }
     }
     void OnTriggerExit(Collider other)

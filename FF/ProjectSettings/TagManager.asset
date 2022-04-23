@@ -9,6 +9,7 @@ TagManager:
   - stairs
   - interarct
   - go
+  - talk
   layers:
   - Default
   - TransparentFX
