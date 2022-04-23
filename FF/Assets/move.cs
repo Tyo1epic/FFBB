@@ -28,7 +28,6 @@ public class move : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             ag = true;
-            StopCoroutine(reload());
             if (speed == 2)
             {
                 Camera.main.GetComponent<Animator>().Play("out", 0, 0); 
@@ -84,7 +83,7 @@ public class move : MonoBehaviour
         }else if (other.tag == "go")
         {
 
-           SceneManager.LoadScene(other.name);
+           SceneManager.LoadSceneAsync(other.name);
         }
     }
     void OnTriggerExit(Collider other)
