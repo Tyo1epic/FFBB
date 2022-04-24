@@ -11,6 +11,8 @@ public class move : MonoBehaviour
     public Slider moveS;
     public Animator inter;
     bool ag;
+    string anim_name;
+    public Renderer cubeRenderer=null;
     void Start()
     {
         Cursor.visible = false;
@@ -20,13 +22,37 @@ public class move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit hits;
+            Ray lookWalls = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            Debug.DrawRay( Camera.main.transform.position, Camera.main.transform.forward + new Vector3(0, 3, 0), Color.green);
+           
+            
+            if (Physics.Raycast(lookWalls, out hits, 4))
+            {
+if (hits.collider.gameObject.tag == "interarct")
+        {
+                   //Get the Renderer component from the new cube
+        cubeRenderer = hits.collider.gameObject.GetComponent<Renderer>();
+
+       //Call SetColor using the shader property name "_Color" and setting the color to red
+       cubeRenderer.material.color = new Color32(200, 200, 200, 0);
+anim_name = hits.collider.gameObject.name;
+            inter = hits.collider.gameObject.transform.GetChild(0).GetComponent<Animator>();
+        }
+            }else if(inter != null){
+       cubeRenderer.material.color = new Color32(140, 140, 140, 0);
+anim_name = "";
+            inter = null;
+            }
         if (Input.GetAxis("Jump") == 1 && inter != null)
         {
             // GetComponent<Rigidbody>().AddForce(new Vector3(0 , 200, 0));
-            inter.Play("dooropen");
+            inter.Play(anim_name);
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            moveS.gameObject.SetActive(true);
+             StopCoroutine(reload());
             ag = true;
             if (speed == 2)
             {
@@ -43,6 +69,8 @@ public class move : MonoBehaviour
         }
         else
         {
+             StopCoroutine(reload());
+
             StartCoroutine(reload());
             if (ag)
             {
@@ -76,11 +104,7 @@ public class move : MonoBehaviour
             }
 
         }
-        else if (other.tag == "interarct")
-        {
-
-            inter = other.gameObject.transform.GetChild(0).GetComponent<Animator>();
-        }else if (other.tag == "go")
+        else if (other.tag == "go")
         {
 
            SceneManager.LoadSceneAsync(other.name);
@@ -113,6 +137,8 @@ public class move : MonoBehaviour
                    if (Input.GetKey(KeyCode.LeftShift)) break;
         
             }
+            moveS.gameObject.SetActive(false);
+
         }
     }
 }
